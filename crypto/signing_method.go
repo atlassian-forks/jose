@@ -17,8 +17,8 @@ type SigningMethod interface {
 	// that occurred during the signing.
 	Sign(raw []byte, key interface{}) (Signature, error)
 
-	// Used to cause quick panics when a crypto.SigningMethod whose form of hashing
-	// isn't linked in the binary when you register a crypto.SigningMethod.
-	// To spoof this, see "crypto.SigningMethodNone".
+	// Hasher returns the hash used by the signing method, or zero if no hash
+	// is required. A non-zero hash must be linked into the binary before the
+	// signing method is registered.
 	Hasher() crypto.Hash
 }
