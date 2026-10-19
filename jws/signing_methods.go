@@ -38,7 +38,8 @@ func RegisterSigningMethod(sm crypto.SigningMethod) {
 		panic("jose/jws: cannot duplicate signing methods")
 	}
 
-	if !sm.Hasher().Available() {
+	// A zero hash means no hashing is required, as with the "none" algorithm.
+	if h := sm.Hasher(); h != 0 && !h.Available() {
 		panic("jose/jws: specific hash is unavailable")
 	}
 
